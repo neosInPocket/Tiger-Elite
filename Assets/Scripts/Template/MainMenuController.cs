@@ -17,7 +17,7 @@ public class MainMenuController : MonoBehaviour
 	
 	public static int CurrentLevel { get; set; } = 0;
 	public static int Coins { get; set; } = 0;
-	public static int CurrentSpeedUpgrade { get; set; } = 0;
+	public static int CurrentGravityUpgrade { get; set; } = 0;
 	public static int CurrentLivesUpgrade { get; set; } = 1;
 	public static string IsFirstTime { get; set; } = "yes";
 	
@@ -93,9 +93,9 @@ public class MainMenuController : MonoBehaviour
 	{
 		MainMenuController.Coins = 100;
 		MainMenuController.CurrentLevel = 1;
-		MainMenuController.CurrentSpeedUpgrade = 0;
-		MainMenuController.CurrentLivesUpgrade = 1;
-		MainMenuController.IsFirstTime = "yes";
+		MainMenuController.CurrentGravityUpgrade = 0;
+		MainMenuController.CurrentLivesUpgrade = 2;
+		MainMenuController.IsFirstTime = "no";
 		SaveLoad.Save();
 	}
 	

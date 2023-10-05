@@ -18,12 +18,15 @@ public class GameController : MonoBehaviour
 	[SerializeField] private WinScreen _defeatScreen; 
 	[SerializeField] private WinScreenWithCoins _winScreen; 
 	[SerializeField] private ProgressBar _levelProgress;
-	[SerializeField] private Transform enemySpawnPosition;
-	[SerializeField] private List<Transform> _coinsSpawnPoints;
 	[SerializeField] private Transform coinContainer;
+	[SerializeField] private Transform platformContainer;
 	[SerializeField] private ParticleSystem _particleSystem;
+	[SerializeField] private PlayerBall player;	
+	[SerializeField] private List<Platform> defaultPlatforms;
+	[SerializeField] private Transform defaultPlayerPosition;
+	[SerializeField] private PlatformCreateTrigger platformCreateTrigger;
 	
-	private float _spawnDelay = 3f;
+	public static float[] rotations = new float[4] { -Platform.zRotationValue, 0, Platform.zRotationValue, 0 }; 
 	private float _playDelay;
 	public static int _levelCoins;
 	private static int _levelMaxPoints;
@@ -33,21 +36,28 @@ public class GameController : MonoBehaviour
 	private bool isTutor = false;
 	public static int lives;
 	public static bool isWon;
-	
+	public static int rotationPointer;
 	private void Awake()
 	{
 		_isPlaying = false;
 		GameEventHandler.OnEvent += OnEventHandler;
-	}
-	
-	private void Update()
-	{
-		if (!_isPlaying) return;
-		if (_isSpawning) return;
+		player.TakeDamageEvent += PlayerTakeDamage;
 	}
 	
 	public void Initialize()
 	{
+		player.isDead = false;
+		DeleteObjects();
+		SetPlatformsIdentity();
+		SpawnDefaultCoins();
+		player.transform.position = defaultPlayerPosition.position;
+		player.Rb.velocity = Vector2.zero;
+		player.Rb.angularVelocity = 0;
+		player.transform.rotation = Quaternion.identity;
+		platformCreateTrigger.Initialize();
+		player.Trail.Clear();
+		
+		rotationPointer = 1;
 		_particleSystem.gameObject.SetActive(false);
 		_isPlaying = false;
 		isWon = false;
@@ -102,6 +112,8 @@ public class GameController : MonoBehaviour
 			_winScreen.gameObject.SetActive(true);
 			_winScreen.Show(_levelCoins);
 			_particleSystem.gameObject.SetActive(true);
+			DeleteCoins();
+			SetPlayerDefaults();
 			return;
 		}
 		
@@ -111,8 +123,16 @@ public class GameController : MonoBehaviour
 			_points = 0;
 			_defeatScreen.gameObject.SetActive(true);
 			_defeatScreen.Show();
+			DeleteCoins();
+			SetPlayerDefaults();
 			return;
 		}
+	}
+	
+	private void SetPlayerDefaults()
+	{
+		player.Rb.velocity = Vector2.zero;
+		player.Rb.gravityScale = 0;
 	}
 	
 	public void ReturnToTheMainMenu()
@@ -137,11 +157,52 @@ public class GameController : MonoBehaviour
 		yield return new WaitForSeconds(_playDelay + 0.5f);
 		_countDownScreen.gameObject.SetActive(false);
 		_isPlaying = true;
+		player.Initialize();
 	}
 	
 	public void UpdateUI()
 	{
 		var progress = _points / _levelMaxPoints;
 		_levelProgress.Refresh(progress);
+	}
+	
+	public void DeleteObjects()
+	{
+		foreach (Transform child in platformContainer)
+		{
+			Destroy(child.gameObject);
+		}
+	}
+	
+	public void DeleteCoins()
+	{
+		foreach (Transform child in coinContainer)
+		{
+			if (child.gameObject.TryGetComponent<Coin>(out Coin coin))
+			{
+				coin.PlayDeath();
+			}
+		}
+	}
+	
+	public void SpawnDefaultCoins()
+	{
+		foreach (var platform in defaultPlatforms)
+		{
+			platform.SpawnCoin(coinContainer);
+		}
+	}
+	
+	private void SetPlatformsIdentity()
+	{
+		foreach (var platform in defaultPlatforms)
+		{
+			platform.SetIdentityRotation();
+		}
+	}
+	
+	public void PlayerTakeDamage()
+	{
+		SetPlatformsIdentity();
 	}
 }

@@ -31,14 +31,14 @@ public class ShopScreen : MonoBehaviour
 		Refresh();
 	}
 	
-	public void BuySpeedUpgrade()
+	public void BuyStickyUpgrade()
 	{
 		var leftCoins = MainMenuController.Coins - 50;
 		if (leftCoins < 0)
 		{
 			return;
 		}
-		MainMenuController.CurrentSpeedUpgrade++;
+		MainMenuController.CurrentGravityUpgrade++;
 		MainMenuController.Coins -= 50;
 		SaveLoad.Save();
 		Refresh();
@@ -50,10 +50,10 @@ public class ShopScreen : MonoBehaviour
 		_livesButton.interactable = true;
 		_coinsText.text = MainMenuController.Coins.ToString();
 		_coinsAmountText.text = "Your coins:";
-		_speedUpgradeAmount.text = "Speed upgrade: " + MainMenuController.CurrentSpeedUpgrade.ToString() + "/3";
+		_speedUpgradeAmount.text = "Speed upgrade: " + MainMenuController.CurrentGravityUpgrade.ToString() + "/3";
 		_maxLivesUpgradeAmount.text = "Lives amount upgrade: " + MainMenuController.CurrentLivesUpgrade.ToString() + "/3";
 		
-		if (MainMenuController.CurrentSpeedUpgrade == 3 || MainMenuController.Coins - 50 < 0)
+		if (MainMenuController.CurrentGravityUpgrade == 3 || MainMenuController.Coins - 50 < 0)
 		{
 			_speedButton.interactable = false;
 		}
