@@ -5,7 +5,9 @@ using UnityEngine;
 public class AudioController : MonoBehaviour
 {
 	[SerializeField] private AudioSource _music;
-	[SerializeField] private AudioSource _coinAppear;
+	[SerializeField] private AudioSource _ballDrop;
+	[SerializeField] private AudioSource _coinCollect;
+	[SerializeField] private AudioSource _playerDie;
 	
 	public float volume => _music.volume;
 	
@@ -18,8 +20,16 @@ public class AudioController : MonoBehaviour
 	{
 		switch (type)
 		{
-			case AudioTypes.CoinAppear:
-				_coinAppear.Play();
+			case AudioTypes.BallDrop:
+				_ballDrop.Play();
+				break;
+				
+			case AudioTypes.CoinCollect:
+				_coinCollect.Play();
+				break;
+				
+			case AudioTypes.PlayerDie:
+				_playerDie.Play();
 				break;
 		}
 		

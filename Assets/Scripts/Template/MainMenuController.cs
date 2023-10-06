@@ -94,8 +94,8 @@ public class MainMenuController : MonoBehaviour
 		MainMenuController.Coins = 100;
 		MainMenuController.CurrentLevel = 1;
 		MainMenuController.CurrentGravityUpgrade = 0;
-		MainMenuController.CurrentLivesUpgrade = 2;
-		MainMenuController.IsFirstTime = "no";
+		MainMenuController.CurrentLivesUpgrade = 1;
+		MainMenuController.IsFirstTime = "yes";
 		SaveLoad.Save();
 	}
 	

@@ -71,6 +71,8 @@ public class PlayerBall : MonoBehaviour
 		if (collision.gameObject.TryGetComponent<Platform>(out Platform platform))
 		{
 			lastPlatform = platform;
+			AudioEvent.RaiseEvent(AudioTypes.BallDrop);
+			
 		}
 	}
 	

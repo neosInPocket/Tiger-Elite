@@ -25,6 +25,9 @@ public class GameController : MonoBehaviour
 	[SerializeField] private List<Platform> defaultPlatforms;
 	[SerializeField] private Transform defaultPlayerPosition;
 	[SerializeField] private PlatformCreateTrigger platformCreateTrigger;
+	[SerializeField] private float particleOffset;
+	[SerializeField] private float particleTriggerOffset;
+	[SerializeField] private GameObject particleTrigger;
 	
 	public static float[] rotations = new float[4] { -Platform.zRotationValue, 0, Platform.zRotationValue, 0 }; 
 	private float _playDelay;
@@ -108,6 +111,7 @@ public class GameController : MonoBehaviour
 			isWon = true;
 			MainMenuController.CurrentLevel++;
 			MainMenuController.Coins += _levelCoins;
+			SetPatricleSystem();
 			SaveLoad.Save();
 			_winScreen.gameObject.SetActive(true);
 			_winScreen.Show(_levelCoins);
@@ -125,6 +129,7 @@ public class GameController : MonoBehaviour
 			_defeatScreen.Show();
 			DeleteCoins();
 			SetPlayerDefaults();
+			AudioEvent.RaiseEvent(AudioTypes.PlayerDie);
 			return;
 		}
 	}
@@ -180,7 +185,7 @@ public class GameController : MonoBehaviour
 		{
 			if (child.gameObject.TryGetComponent<Coin>(out Coin coin))
 			{
-				coin.PlayDeath();
+				coin.PlayDeath(true);
 			}
 		}
 	}
@@ -199,10 +204,23 @@ public class GameController : MonoBehaviour
 		{
 			platform.SetIdentityRotation();
 		}
+		
+		foreach (var platform in defaultPlatforms)
+		{
+			platform.SetIdentityRotation();
+		}
 	}
 	
 	public void PlayerTakeDamage()
 	{
 		SetPlatformsIdentity();
+	}
+	
+	private void SetPatricleSystem()
+	{
+		var particlePosition = new Vector2(_particleSystem.transform.position.x, player.transform.position.y + particleOffset);
+		_particleSystem.gameObject.transform.position = particlePosition;
+		var triggerPosition = new Vector2(particleTrigger.transform.position.x, player.transform.position.y - particleTriggerOffset);
+		particleTrigger.gameObject.transform.position = triggerPosition;
 	}
 }

@@ -8,8 +8,7 @@ public class ShopScreen : MonoBehaviour
 {
 	[SerializeField] private Button _speedButton;
 	[SerializeField] private Button _livesButton;
-	[SerializeField] private TMP_Text _coinsAmountText;
-	[SerializeField] private TMP_Text _speedUpgradeAmount;
+	[SerializeField] private TMP_Text gravityUpgradeAmount;
 	[SerializeField] private TMP_Text _maxLivesUpgradeAmount;
 	[SerializeField] private TMP_Text _coinsText;
 	
@@ -31,7 +30,7 @@ public class ShopScreen : MonoBehaviour
 		Refresh();
 	}
 	
-	public void BuyStickyUpgrade()
+	public void BuyGravityUpgrade()
 	{
 		var leftCoins = MainMenuController.Coins - 50;
 		if (leftCoins < 0)
@@ -49,8 +48,7 @@ public class ShopScreen : MonoBehaviour
 		_speedButton.interactable = true;
 		_livesButton.interactable = true;
 		_coinsText.text = MainMenuController.Coins.ToString();
-		_coinsAmountText.text = "Your coins:";
-		_speedUpgradeAmount.text = "Speed upgrade: " + MainMenuController.CurrentGravityUpgrade.ToString() + "/3";
+		gravityUpgradeAmount.text = "Gravity upgrade: " + MainMenuController.CurrentGravityUpgrade.ToString() + "/3";
 		_maxLivesUpgradeAmount.text = "Lives amount upgrade: " + MainMenuController.CurrentLivesUpgrade.ToString() + "/3";
 		
 		if (MainMenuController.CurrentGravityUpgrade == 3 || MainMenuController.Coins - 50 < 0)

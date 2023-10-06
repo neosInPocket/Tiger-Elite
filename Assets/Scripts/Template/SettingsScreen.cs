@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class SettingsScreen : MonoBehaviour
 {
 	[SerializeField] private Scrollbar musicScrollbar;
-	[SerializeField] private Scrollbar fxScrollbar;
 	[SerializeField] private AudioController audioController;
 	
 	private void Start()
