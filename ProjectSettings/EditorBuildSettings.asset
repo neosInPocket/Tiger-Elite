@@ -8,4 +8,61 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene.unity
+    guid: 59cd6a2dc6b2458488625ee0a8d897aa
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 1.unity
+    guid: a2b10dad06af984409c5855d18ed2acb
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 2.unity
+    guid: 3b574a1c5f2a1f4478535e551fdfd287
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 3.unity
+    guid: 4f27c7a522dad6f449fbf7b7809eb72b
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 4.unity
+    guid: ed813a92f52c69d49bfda6bc769c0825
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 5.unity
+    guid: f86049ba8f7a4e343916bdf8c2540d8b
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 6.unity
+    guid: c66aee39251b9334b9208f003e839e6c
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 7.unity
+    guid: 772197488f3530841814a5eb05c073ac
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 8.unity
+    guid: 71872d696e914084294864c7274a06ae
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 9.unity
+    guid: b81428619d36d734dae14760a8474b5d
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 10.unity
+    guid: 8a4721df745b13c4daf1deefa82b7ec4
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 11.unity
+    guid: 55fc53d546fdc104591586ab32ec5850
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 12.unity
+    guid: 9e4eccd6a0f67ca42a756cc8208ce590
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 13.unity
+    guid: ebb1fe6d013d84243ab54947f8b4eead
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 14.unity
+    guid: 3de5b7496fc8ea54eb27ba05c9ea2163
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 15.unity
+    guid: fe19b6e79bdebf34e9ef9a5c7184d7e0
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 16.unity
+    guid: 80356717dccd18f46b8c3e7b404c47ff
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 17.unity
+    guid: 9a1579c40fa803c43a9e3672f58ce7af
+  - enabled: 1
+    path: Assets/Scenes/player-controllerScene 18.unity
+    guid: 06089c0f109079a458b8a70a63d9e472
   m_configObjects: {}
