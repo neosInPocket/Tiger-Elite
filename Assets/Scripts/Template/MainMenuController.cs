@@ -3,15 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
 	[SerializeField] private Canvas _backgroundCanvas;
-	[SerializeField] private Camera _backGroundCamera;
-	[SerializeField] private Camera _mainCamera;
 	[SerializeField] private FadeScreen _fadeScreen; 
 	[SerializeField] private ShopScreen _shopScreen;
-	[SerializeField] private GameController _gameController; 
 	[SerializeField] private MainMenuScreen _menuScreen;
 	[SerializeField] private SettingsScreen settingsScreen;
 	
@@ -21,12 +19,16 @@ public class MainMenuController : MonoBehaviour
 	public static int CurrentLivesUpgrade { get; set; } = 1;
 	public static string IsFirstTime { get; set; } = "yes";
 	
+	private void Start()
+	{
+		ClearProgress();
+		Initialize();
+	}
+	
 	public void Initialize()
 	{
 		SaveLoad.Load();
-		_backgroundCanvas.worldCamera = _mainCamera;
 		_menuScreen.gameObject.SetActive(true);
-		_mainCamera.cullingMask = LayerMask.GetMask("TransparentFX", "Ignore Raycast", "Water", "UI", "Rig");
 	}
 	
 	public void GetToGame()
@@ -79,9 +81,8 @@ public class MainMenuController : MonoBehaviour
 	public void LoadGame()
 	{
 		_fadeScreen.OnFadeEnd -= LoadGame;
-		_menuScreen.gameObject.SetActive(false);
-		_gameController.Initialize();
-		_mainCamera.cullingMask = LayerMask.GetMask("Default", "TransparentFX", "Ignore Raycast", "Water", "UI", "Rig");
+		Camera.main.cullingMask = LayerMask.GetMask("Default", "TransparentFX", "Ignore Raycast", "Water", "UI", "Rig");
+		SceneManager.LoadScene(0);
 	}
 	
 	public void Save()

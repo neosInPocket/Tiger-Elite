@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
@@ -12,7 +13,6 @@ public class GameController : MonoBehaviour
 	[SerializeField] private TutorialScreen _tutor;
 	[SerializeField] private UIHealth _uiHealth; 
 	[SerializeField] private FadeScreen _fadeScreen;
-	[SerializeField] private MainMenuController _mainMenuController;
 	[SerializeField] private GameScreen _gameScreen;
 	[SerializeField] private WinScreen _countDownScreen; 
 	[SerializeField] private WinScreen _defeatScreen; 
@@ -20,14 +20,12 @@ public class GameController : MonoBehaviour
 	[SerializeField] private ProgressBar _levelProgress;
 	[SerializeField] private Transform coinContainer;
 	[SerializeField] private Transform platformContainer;
-	[SerializeField] private ParticleSystem _particleSystem;
 	[SerializeField] private PlayerBall player;	
 	[SerializeField] private List<Platform> defaultPlatforms;
 	[SerializeField] private Transform defaultPlayerPosition;
 	[SerializeField] private PlatformCreateTrigger platformCreateTrigger;
 	[SerializeField] private float particleOffset;
 	[SerializeField] private float particleTriggerOffset;
-	[SerializeField] private GameObject particleTrigger;
 	
 	public static float[] rotations = new float[4] { -Platform.zRotationValue, 0, Platform.zRotationValue, 0 }; 
 	private float _playDelay;
@@ -45,6 +43,7 @@ public class GameController : MonoBehaviour
 		_isPlaying = false;
 		GameEventHandler.OnEvent += OnEventHandler;
 		player.TakeDamageEvent += PlayerTakeDamage;
+		Initialize();
 	}
 	
 	public void Initialize()
@@ -61,7 +60,6 @@ public class GameController : MonoBehaviour
 		player.Trail.Clear();
 		
 		rotationPointer = 1;
-		_particleSystem.gameObject.SetActive(false);
 		_isPlaying = false;
 		isWon = false;
 		_backgroundCanvas.worldCamera = _backGroundCamera;
@@ -111,11 +109,9 @@ public class GameController : MonoBehaviour
 			isWon = true;
 			MainMenuController.CurrentLevel++;
 			MainMenuController.Coins += _levelCoins;
-			SetPatricleSystem();
 			SaveLoad.Save();
 			_winScreen.gameObject.SetActive(true);
 			_winScreen.Show(_levelCoins);
-			_particleSystem.gameObject.SetActive(true);
 			DeleteCoins();
 			SetPlayerDefaults();
 			return;
@@ -149,8 +145,7 @@ public class GameController : MonoBehaviour
 	private void OnFadeMainMenuEnd()
 	{
 		_fadeScreen.OnFadeEnd -= OnFadeMainMenuEnd;
-		_gameScreen.gameObject.SetActive(false);
-		_mainMenuController.Initialize();
+		SceneManager.LoadScene(1);
 	}
 	
 	private IEnumerator PlayDelay()
@@ -214,13 +209,5 @@ public class GameController : MonoBehaviour
 	public void PlayerTakeDamage()
 	{
 		SetPlatformsIdentity();
-	}
-	
-	private void SetPatricleSystem()
-	{
-		var particlePosition = new Vector2(_particleSystem.transform.position.x, player.transform.position.y + particleOffset);
-		_particleSystem.gameObject.transform.position = particlePosition;
-		var triggerPosition = new Vector2(particleTrigger.transform.position.x, player.transform.position.y - particleTriggerOffset);
-		particleTrigger.gameObject.transform.position = triggerPosition;
 	}
 }
